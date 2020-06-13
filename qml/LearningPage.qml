@@ -6,34 +6,6 @@ Page {
 
     Column {
         anchors.centerIn: parent
-//        AppPaper {
-//            width: dp(200)
-//            height: dp(300)
-////            margin: parent.height / 20
-
-//            AppText {
-//                id: word
-//                width: parent.width
-//                text: "Some word"
-//                horizontalAlignment: Text.AlignHCenter
-//                topPadding: parent.height / 10
-//            }
-
-//            AppText {
-//                id: translation
-//                width: parent.width
-//                text: "Some translation"
-//                color: "green"
-//                visible: false
-//                horizontalAlignment: Text.AlignHCenter
-//                topPadding: parent.height / 5
-//            }
-
-//            AppCardSwipeArea {
-//                rotationFactor: 0.05
-
-//            }
-//        }
 
         AppCard {
             id: card

@@ -51,14 +51,21 @@ QHash<int, QByteArray> WordListModel::roleNames() const
 
 void WordListModel::addNewList(QString newListName)
 {
-    stringList.append(newListName);
-
     QString listName = newListName.replace(" ", "_");
 
     auto dir = QDir("lists");
     QFile newFile(dir.path() + "/" + listName + ".txt");
 
     emit addedNewList(newListName, !newFile.exists());
+    if (newFile.exists())
+        return;
+
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    stringList.append(newListName);
+    endInsertRows();
+
+//    QModelIndex index = createIndex(0,0);
+//    emit dataChanged(index, index);
 
     newFile.open(QIODevice::WriteOnly);
     newFile.close();

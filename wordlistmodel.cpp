@@ -48,3 +48,18 @@ QHash<int, QByteArray> WordListModel::roleNames() const
     roleNames[nameRole] = "name";
     return roleNames;
 }
+
+void WordListModel::addNewList(QString newListName)
+{
+    stringList.append(newListName);
+
+    QString listName = newListName.replace(" ", "_");
+
+    auto dir = QDir("lists");
+    QFile newFile(dir.path() + "/" + listName + ".txt");
+
+    emit addedNewList(newListName, !newFile.exists());
+
+    newFile.open(QIODevice::WriteOnly);
+    newFile.close();
+}

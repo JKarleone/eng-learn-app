@@ -1,4 +1,5 @@
 import Felgo 3.0
+import QtQuick 2.12
 import WordListModel 1.0
 
 ListPage {
@@ -32,26 +33,62 @@ ListPage {
         title: "Создать новый список"
 
         positiveActionLabel: "Добавить"
-        negativeActionLabel: "Отмена"
+        negativeActionLabel: "Закрыть"
 
-        AppTextField {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            borderWidth: 1
-            borderColor: "#1C77C3"
+        Column {
+            anchors.centerIn: parent
+            spacing: 10
 
-            placeholderText: "Название нового списка"
+            AppTextField {
+                id: newListNameField
+                borderWidth: 1
+                borderColor: "#1C77C3"
+
+                placeholderText: "Название нового списка"
+            }
+
+            AppText {
+                id: message
+                visible: false
+                width: parent.width
+                fontSize: 13
+            }
         }
 
-        onCanceled: close()
-        onAccepted: {
-            //Добавление нового списка в wordListModel
+        onCanceled: {
+            message.visible = false
+            newListNameField.clear()
             close()
+        }
+        onAccepted: {
+            //Недопустимые символы в названии списка
+            var re = /[_:.\\/,]/
+            if (newListNameField.text.search(re) != -1) {
+                message.text = "Название содержит недопустимые символы"
+                message.color = "red"
+                message.visible = true
+            }
+            else {
+                //Добавление нового списка в wordListModel
+                wordListModel.addNewList(newListNameField.text)
+            }
             console.log("Добавление нового списка")
         }
     }
 
     WordListModel {
         id: wordListModel
+
+        onAddedNewList: {
+            if (added) {
+                message.text = "Список \"" + newListName + "\" успешно добавлен!"
+                message.color = "green"
+            }
+            else {
+                message.text = "Список с таким названием уже существует!"
+                message.color = "red"
+            }
+            message.visible = true
+        }
     }
 }

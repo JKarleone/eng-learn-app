@@ -21,6 +21,12 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    Q_INVOKABLE void addNewList(QString newListName);
+
+signals:
+    void addedNewList(QString newListName, bool added);
+
 private:
     QStringList stringList;
     QString normalizeStr(QString str);

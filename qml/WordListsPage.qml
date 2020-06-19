@@ -3,7 +3,9 @@ import QtQuick 2.12
 import WordListModel 1.0
 
 ListPage {
-    id: listsPage
+    id: listPage
+
+    property string listName: ""
 
     model: wordListModel
     delegate: SimpleRow {
@@ -11,7 +13,20 @@ ListPage {
         AppCheckBox {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.rightMargin: parent.width / 20
+            anchors.rightMargin: parent.width / 10
+        }
+
+        IconButton {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: parent.width / 200
+            icon: IconType.angleright
+            size: dp(25)
+
+            onClicked: {
+                listName = name
+                listPage.navigationStack.push(wordListComponent)
+            }
         }
     }
 
@@ -43,6 +58,7 @@ ListPage {
                 id: newListNameField
                 borderWidth: 1
                 borderColor: "#1C77C3"
+                font.pixelSize: 16
 
                 placeholderText: "Название нового списка"
             }
@@ -61,12 +77,17 @@ ListPage {
             close()
         }
         onAccepted: {
+            message.color = "red"
+            message.visible = true
+
+            if (newListNameField.text == "") {
+                message.text = "Осталось пустое поле"
+            }
+
             //Недопустимые символы в названии списка
-            var re = /[_:.\\/,]/
+            var re = /[`~#;%^:&?*(-_)+=|/\<>{}"]/
             if (newListNameField.text.search(re) != -1) {
-                message.text = "Название содержит недопустимые символы"
-                message.color = "red"
-                message.visible = true
+                message.text = "Название содержит недопустимые символы"  
             }
             else {
                 //Добавление нового списка в wordListModel
@@ -89,6 +110,14 @@ ListPage {
                 message.color = "red"
             }
             message.visible = true
+        }
+    }
+
+    Component {
+        id: wordListComponent
+
+        WordsPage {
+            title: listName
         }
     }
 }

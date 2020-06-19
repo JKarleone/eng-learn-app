@@ -27,7 +27,7 @@ App {
 
             NavigationStack {
                 initialPage:
-                WordListPage {
+                WordListsPage {
                     id: listsPage
                     title: "Списки слов"
                 }

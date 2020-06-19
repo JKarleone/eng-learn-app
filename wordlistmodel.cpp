@@ -28,6 +28,7 @@ QString WordListModel::normalizeStr(QString str)
 
 int WordListModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return stringList.count();
 }
 
@@ -57,15 +58,13 @@ void WordListModel::addNewList(QString newListName)
     QFile newFile(dir.path() + "/" + listName + ".txt");
 
     emit addedNewList(newListName, !newFile.exists());
+
     if (newFile.exists())
         return;
 
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    stringList.append(newListName);
+    beginInsertRows(QModelIndex(), 0, 0);
+    stringList.insert(0, newListName);
     endInsertRows();
-
-//    QModelIndex index = createIndex(0,0);
-//    emit dataChanged(index, index);
 
     newFile.open(QIODevice::WriteOnly);
     newFile.close();

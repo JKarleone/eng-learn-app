@@ -3,6 +3,7 @@
 
 #include <QQmlApplicationEngine>
 #include <wordlistmodel.h>
+#include <wordmodel.h>
 
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 //#include <FelgoLiveClient>
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     FelgoApplication felgo;
 
     qmlRegisterType<WordListModel>("WordListModel", 1, 0, "WordListModel");
+    qmlRegisterType<WordModel>("WordModel", 1, 0, "WordModel");
 
     // Use platform-specific fonts instead of Felgo's default font
     felgo.setPreservePlatformFonts(true);

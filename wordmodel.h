@@ -33,6 +33,7 @@ public:
 
     Q_INVOKABLE void initialize(QString listName);
     Q_INVOKABLE void addNewWord(QString word, QString translation);
+    Q_INVOKABLE void deleteWord(int index);
 
 signals:
     void addedNewWord(QString word, bool added);
@@ -40,6 +41,7 @@ signals:
 private:
     QList<WordInfo> words;
     QString filePath;
+
     QString decode(QByteArray str);
 };
 

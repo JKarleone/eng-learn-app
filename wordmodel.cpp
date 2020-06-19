@@ -99,3 +99,35 @@ void WordModel::addNewWord(QString word, QString translation)
 
     emit addedNewWord(word, true);
 }
+
+void WordModel::deleteWord(int index)
+{
+    QFile file(filePath);
+    int realIndex = rowCount() - index - 1;
+
+    QString fileStr = "";
+    file.open(QIODevice::ReadOnly);
+
+    for (int i = 0; i < rowCount(); i++)
+    {
+        if (i == realIndex)
+            continue;
+        QByteArray line = file.readLine();
+        QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+        QString uniStr = codec->toUnicode(line);
+        fileStr += uniStr;
+    }
+    file.close();
+
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream writeStream(&file);
+        writeStream.setCodec(QTextCodec::codecForName("Windows-1251"));
+        writeStream << fileStr;
+    }
+    file.close();
+
+    beginRemoveRows(QModelIndex(), index, index);
+    words.removeAt(index);
+    endRemoveRows();
+}

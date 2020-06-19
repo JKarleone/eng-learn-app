@@ -15,6 +15,10 @@ ListPage {
             anchors.right: parent.right
             anchors.rightMargin: parent.width / 100
             icon: IconType.close
+
+            onClicked: {
+                wordModel.deleteWord(index)
+            }
         }
     }
 
@@ -111,6 +115,9 @@ ListPage {
                 message.text = "Слово \"" + word + "\" добавлено!"
                 message.color = "green"
                 message.visible = true
+
+                newWordNameField.clear()
+                translationField.clear()
             }
         }
     }

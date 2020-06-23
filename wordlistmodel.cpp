@@ -10,11 +10,14 @@ WordListModel::WordListModel()
     auto dir = QDir("lists");
     dir.setSorting(QDir::Time);
     QFileInfoList fileList = dir.entryInfoList();
+
     for (int i = 0; i < fileList.size(); i++) {
         QFileInfo fileInfo = fileList.at(i);
         QString fileName = fileInfo.fileName();
+
         if (fileName == "." || fileName == "..")
             continue;
+
         fileName = normalizeStr(fileName);
         stringList.append(fileName);
     }

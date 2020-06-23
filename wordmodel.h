@@ -41,8 +41,6 @@ signals:
 private:
     QList<WordInfo> words;
     QString filePath;
-
-    QString decode(QByteArray str);
 };
 
 #endif // WORDMODEL_H

@@ -4,18 +4,66 @@ import QtQuick 2.12
 Page {
     id: learningPage
 
+    property string listName: ""
+    property string word: ""
+    property string translation: ""
+    property int count: -1
+
+    function updateData() {
+        var list = AppCardList.get()
+
+        if (list.length != 0) {
+            listName = list[0]
+            word = list[1]
+            translation = list[2]
+            count = list[3]
+            loader.sourceComponent = cardComponent
+        }
+        else {
+            loader.sourceComponent = textComponent
+        }
+
+        console.log(listName)
+        console.log(word)
+        console.log(translation)
+        console.log(count)
+    }
+
     Column {
         anchors.centerIn: parent
 
         Component.onCompleted: {
-            loader.sourceComponent = cardComponent
+            updateData()
         }
 
         Loader {
             id: loader
+
+            Connections {
+                target: AppCardList;
+                onShowData: {
+                    console.log("working")
+                    if (!AppCardList.isEmpty()) {
+                        loader.sourceComponent = cardComponent
+                        updateData()
+                    }
+                    else
+                        loader.sourceComponent = textComponent
+                }
+            }
         }
+    }
 
+    Component {
+        id: textComponent
 
+        AppText {
+            id: mainText
+
+            text: "Похоже слов больше нет"
+            font.pixelSize: dp(20)
+            color: "red"
+        }
     }
 
     Component {
@@ -29,8 +77,8 @@ Page {
             swipeEnabled: true
 
             header: SimpleRow {
-                text: "Новое слово"
-                detailText: "Название списка"
+                text: count == "0" ? "Новое слово" : count + "й повтор слова"
+                detailText: listName
                 enabled: false
             }
 
@@ -39,7 +87,7 @@ Page {
                 spacing: dp(15)
 
                 AppText {
-                    text: "Word"
+                    text: word
                 }
 
                 AppText {
@@ -49,7 +97,7 @@ Page {
 
                 AppText {
                     id: translatedWord
-                    text: "Слово"
+                    text: translation
                     font.bold: true
                     visible: false
                 }
@@ -92,7 +140,12 @@ Page {
 
             cardSwipeArea.onSwipeOutCompleted: {
                 loader.sourceComponent = undefined
-                console.log("Swipe completed")
+
+                console.log("Swipe completed on " + direction)
+
+                AppCardList.swipeCompleted(direction)
+                updateData()
+
                 loader.sourceComponent = cardComponent
             }
         }

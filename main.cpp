@@ -2,8 +2,10 @@
 #include <FelgoApplication>
 
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <wordlistmodel.h>
 #include <wordmodel.h>
+#include <appcardlist.h>
 
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 //#include <FelgoLiveClient>
@@ -22,6 +24,10 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
+
+    AppCardList cardList;
+    auto ctx = engine.rootContext();
+    ctx->setContextProperty("AppCardList", QVariant::fromValue(&cardList));
 
     // Set an optional license key from project file
     // This does not work if using Felgo Live, only for Felgo Cloud Builds and local builds

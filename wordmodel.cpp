@@ -121,3 +121,13 @@ void WordModel::deleteWord(int index)
     words.removeAt(index);
     endRemoveRows();
 }
+
+QList<WordInfo> WordModel::getAllWords()
+{
+    return words;
+}
+
+QString WordModel::getFilePath()
+{
+    return filePath;
+}

@@ -39,6 +39,7 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
+    appcardlist.cpp \
     wordlistmodel.cpp \
     wordmodel.cpp
 
@@ -67,5 +68,6 @@ DISTFILES += \
     qml/WordsPage.qml
 
 HEADERS += \
+    appcardlist.h \
     wordlistmodel.h \
     wordmodel.h

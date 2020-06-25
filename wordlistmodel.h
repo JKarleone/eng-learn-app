@@ -23,6 +23,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     Q_INVOKABLE void addNewList(QString newListName);
+    Q_INVOKABLE void deleteList(QString listName, int index);
 
 signals:
     void addedNewList(QString newListName, bool added);

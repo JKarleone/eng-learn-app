@@ -17,7 +17,13 @@ ListPage {
             icon: IconType.close
 
             onClicked: {
+                var title = wordListPage.title
+
+                AppCardList.deleteWord(title,
+                                       word,
+                                       translation)
                 wordModel.deleteWord(index)
+                AppCardList.showData()
             }
         }
     }
@@ -85,21 +91,34 @@ ListPage {
             message.color = "red"
             message.visible = true
 
-            if (newWordNameField.text == "" ||
-                translationField.text == "") {
+            var word = newWordNameField.text
+            var translation = translationField.text
+            var title = wordListPage.title
+
+            if (word == "" ||
+                translation == "") {
                 message.text = "Присутствуют пустые поля! Заполните их!"
                 return
             }
 
             var re = /[&]/
-            if (newWordNameField.text.search(re) != -1 ||
-                translationField.text.search(re) != -1) {
+            if (word.search(re) != -1 ||
+                translation.search(re) != -1) {
                 message.text = "Заполненные поля содержат недопустимые символы!"
             }
             else {
-                wordModel.addNewWord(newWordNameField.text,
-                                     translationField.text)
+                wordModel.addNewWord(word,
+                                     translation)
+
+                if (AppCardList.isListExist(title)){
+                    AppCardList.addWord(title,
+                                        word,
+                                        translation)
+                    AppCardList.showData()
+                }
             }
+
+            newWordNameField.focus = true
 
             console.log("Добавление нового слова в список '" + wordListPage.title + "'")
         }

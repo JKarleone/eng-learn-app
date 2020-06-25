@@ -19,6 +19,10 @@ WordListModel::WordListModel()
             continue;
 
         fileName = normalizeStr(fileName);
+
+        if (fileName == "main" || fileName == "main lists")
+            continue;
+
         stringList.append(fileName);
     }
 }
@@ -65,10 +69,23 @@ void WordListModel::addNewList(QString newListName)
     if (newFile.exists())
         return;
 
+    // Отображение нового списка в приложении
     beginInsertRows(QModelIndex(), 0, 0);
     stringList.insert(0, newListName);
     endInsertRows();
 
+    // Создание файла
     newFile.open(QIODevice::WriteOnly);
     newFile.close();
+}
+
+void WordListModel::deleteList(QString listName, int index)
+{
+    listName = listName.replace(" ", "_");
+    QFile file("lists/" + listName + ".txt");
+    file.remove();
+
+    beginRemoveRows(QModelIndex(), index, index);
+    stringList.removeAt(index);
+    endRemoveRows();
 }

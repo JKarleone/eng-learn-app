@@ -3,17 +3,46 @@ import QtQuick 2.12
 import WordListModel 1.0
 
 ListPage {
-    id: listPage
+    id: page
 
     property string listName: ""
 
     model: wordListModel
     delegate: SimpleRow {
         text: name
+
         AppCheckBox {
+            id: checkBox
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.rightMargin: parent.width / 10
+            anchors.rightMargin: dp(100)
+
+            checked: AppCardList.isListExist(name)
+
+            onClicked: {
+                if (checked) {
+                    AppCardList.addList(name)
+                    AppCardList.showData()
+                }
+                else {
+                    AppCardList.removeList(name)
+                    AppCardList.showData()
+                }
+            }
+        }
+
+        IconButton {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: dp(50)
+            icon: IconType.close
+            size: dp(20)
+
+            onClicked: {
+                AppCardList.removeList(name)
+                wordListModel.deleteList(name, index)
+                AppCardList.showData()
+            }
         }
 
         IconButton {
@@ -25,7 +54,7 @@ ListPage {
 
             onClicked: {
                 listName = name
-                listPage.navigationStack.push(wordListComponent)
+                page.navigationStack.push(wordListComponent)
             }
         }
     }

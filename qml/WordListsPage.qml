@@ -121,6 +121,7 @@ ListPage {
             else {
                 //Добавление нового списка в wordListModel
                 wordListModel.addNewList(newListNameField.text)
+                newListNameField.clear()
             }
             console.log("Добавление нового списка")
         }

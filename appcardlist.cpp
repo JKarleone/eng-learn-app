@@ -245,7 +245,7 @@ void AppCardList::updateMainTxt()
         currentCard = m_cardwords[0];
 }
 
-void AppCardList::deleteWord(QString list, QString word, QString translation)
+void AppCardList::removeWord(QString list, QString word, QString translation)
 {
     for (int i = 0; i < m_cardwords.size(); i++)
     {

@@ -33,7 +33,7 @@ public:
     Q_INVOKABLE bool isListExist(QString listName);
 
     Q_INVOKABLE void addWord(QString list, QString word, QString translation);
-    Q_INVOKABLE void deleteWord(QString list, QString word, QString translation);
+    Q_INVOKABLE void removeWord(QString list, QString word, QString translation);
 
 signals:
     void showData();

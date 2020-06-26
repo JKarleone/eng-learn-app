@@ -34,6 +34,7 @@ Page {
 
         Component.onCompleted: {
             updateData()
+            console.log(app.height, app.width)
         }
 
         Loader {
@@ -71,7 +72,7 @@ Page {
 
         AppCard {
             id: card
-            width: dp(300)
+            width: dp(300 + app.width / 10)
             height: dp(300)
             paper.radius: dp(5)
             swipeEnabled: true

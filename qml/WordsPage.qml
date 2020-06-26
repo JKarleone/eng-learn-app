@@ -19,7 +19,7 @@ ListPage {
             onClicked: {
                 var title = wordListPage.title
 
-                AppCardList.deleteWord(title,
+                AppCardList.removeWord(title,
                                        word,
                                        translation)
                 wordModel.deleteWord(index)

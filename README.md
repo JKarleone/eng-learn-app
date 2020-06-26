@@ -11,5 +11,6 @@
 В данной сборке используется Felgo, поэтому необходимо его скачать:  
 :link: https://felgo.com/download  
 И только с помощью него запустить проект.
+:heavy_check_mark: Qt 5.13.2 MinGW
 ## Видео с демонстрацией работы
-:link: (в процессе) :shipit:
+:link: https://yadi.sk/i/ga3mLZp0LFdaUQ :shipit:

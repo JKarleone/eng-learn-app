@@ -131,3 +131,31 @@ QString WordModel::getFilePath()
 {
     return filePath;
 }
+
+void WordModel::updateWord(QString word, QString translation)
+{
+    QFile file(filePath);
+    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    file.close();
+
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream writeStream(&file);
+        writeStream.setCodec(QTextCodec::codecForName("UTF-8"));
+
+        QString resStr;
+
+        for (int i = 0; i < words.size(); i++)
+        {
+            WordInfo wordInfo = words[i];
+            if (wordInfo.word == word && wordInfo.translation == translation)
+                wordInfo.count += 1;
+
+            resStr += wordInfo.word + '&' + wordInfo.translation + '&'
+                    + QString::number(wordInfo.count) + '\n';
+        }
+
+        writeStream << resStr;
+    }
+    file.close();
+}

@@ -80,6 +80,9 @@ void AppCardList::swipeCompleted(QString direction)
     if (direction == "right")
     {
         updateMainTxt();
+        WordModel model;
+        model.initialize(currentCard.list);
+        model.updateWord(currentCard.word, currentCard.translation);
     }
 
     currentCard = m_cardwords[0];

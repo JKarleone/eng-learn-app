@@ -35,6 +35,7 @@ public:
     Q_INVOKABLE void addNewWord(QString word, QString translation);
     Q_INVOKABLE void deleteWord(int index);
 
+    void updateWord(QString word, QString translation);
     QList<WordInfo> getAllWords();
     QString getFilePath();
 
